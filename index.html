@@ -50,6 +50,12 @@
       document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
       });
+      let h = document.createElement("h2");
+      h.innerHTML = object["name"];
+      let i = document.createElement("image");
+      i.innerHTML = object["image"];
+      let p = document.createElement("p");
+      p.innerHTML = object["likes"] + "Likes";
     </div>
   </body>
 </html>
