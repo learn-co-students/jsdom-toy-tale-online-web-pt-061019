@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // debugger;
     e.preventDefault();
     // submitData(e.currentTarget.elements[0].value,e.currentTarget.elements[1].value )
-    // submitData();
+    submitData();
   })
 
 
@@ -39,4 +39,32 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-     
+    function submitData (name, image,likes){
+  
+      let formData = {
+        name:  name,
+        image: image,
+        likes: likes
+      }
+      
+      let configObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(formData)
+      };
+    
+    };
+
+PATCH http://localhost:3000/toys/:id
+headers: 
+{
+  "Content-Type": "application/json",
+  Accept: "application/json"
+}
+ 
+body: JSON.stringify({
+  "likes": <new number>
+})
