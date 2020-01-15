@@ -1,15 +1,13 @@
 const addBtn = document.querySelector('#new-toy-btn')
 const toyForm = document.querySelector('.container')
 let addToy = false
-////////////////////
-///////on load
+///on load
 document.addEventListener('DOMContentLoaded', function() {
   fetchToys();
 })
 
 
-///////////////////////
-//// GET fetch for Toys
+// GET fetch for Toys
 function fetchToys() {
   return fetch('http://localhost:3000/toys')
   .then(resp => resp.json())
@@ -17,16 +15,14 @@ function fetchToys() {
 }
 
 
-//////////////////
-//// New Toy Form
+// New Toy Form
 toyForm.addEventListener("submit", function(e){
 e.preventDefault()
 sendToyData(e.target)
 })
 
 
-////////////////////////////
-//// POST fetch for new toys
+//POST fetch for new toys
 function sendToyData(form) {
   fetch('http://localhost:3000/toys', {
     method: "POST",
@@ -53,8 +49,7 @@ function sendToyData(form) {
 
 
 
-/////////////////////////////////////////////////////////
-//////Increment Likes on toys on page & PATCH fetch Likes
+//Increment Likes on toys on page & PATCH fetch Likes
 let toyContainer = document.querySelector("#toy-collection")
 
 toyContainer.addEventListener("click", function(e){
@@ -81,13 +76,7 @@ toyContainer.addEventListener("click", function(e){
   })
 
 
-
-
-
-
-
-//////////////////////////////
-//// render Toy cards on page
+// render Toy cards on page
 function renderToys(json) {
   const toyContainer = document.querySelector("#toy-collection")
     json.forEach(toy => {
@@ -103,11 +92,6 @@ function renderToys(json) {
 }
 
 
-
-
-
-
-///////////////////
 addBtn.addEventListener('click', () => {
   // hide & seek with the form
   addToy = !addToy
