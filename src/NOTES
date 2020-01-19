@@ -1,0 +1,42 @@
+let addToy = false
+const addBtn = document.querySelector('#new-toy-btn')
+const toyForm = document.querySelector('.container')
+const toys = "http://localhost:3000/toys"
+
+document.addEventListener('DOMContentLoaded', function() {
+getToys()
+})
+
+
+function getToys() {
+  fetch(toys)
+    .then(resp => resp.json())
+    .then(json => addToys(json))
+}
+
+function addToys(json) {
+  let toyDiv = document.querySelector('#toy-collection')
+  for(const key in json) {
+
+    json.forEach(card => {
+      let newDiv = document.createElement('div');
+      newDiv.textContent = JSON.stringify(json[key]);
+      toyDiv.appendChild(newDiv);
+
+    
+    })
+  }
+}
+
+function hideAndSeek() {
+  addBtn.addEventListener('click', () => {
+    // hide & seek with the form
+    addToy = !addToy
+    if (addToy) {
+      toyForm.style.display = 'block'
+    } else {
+      toyForm.style.display = 'none'
+    }
+  })
+
+}
