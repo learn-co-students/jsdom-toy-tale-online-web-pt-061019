@@ -73,6 +73,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
       img.classList.add("toy-avatar")
       p.innerText = toy.likes;
       button.innerText = "Like <3"
+      button.addEventListener('click', event => {
+        // console.log("click");
+        updateLikes(event);
+      })
 
       div.classList.add("card");
       div.appendChild(h2);
@@ -81,8 +85,27 @@ document.addEventListener("DOMContentLoaded", ()=>{
       div.appendChild(button);
 
       button.classList.add("like-btn");
+      button.id = toy.id;
 
       toyCollection.appendChild(div);
       }
     }
+
+  function updateLikes(event) {
+    let id = event.target.id;
+    let currentLikes = parseInt(event.target.previousElementSibling.innerText) + 1;
+    
+    fetch(`http://localhost:3000/toys/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        "likes": currentLikes
+      })
+    })
+    event.target.previousElementSibling.innerText = currentLikes;
+
+  }
 })
