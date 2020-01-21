@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   const addBtn = document.querySelector('#new-toy-btn')
   const toyForm = document.querySelector('.container')
+  const submit = document.querySelector('#submit')
 
   addBtn.addEventListener('click', () => {
     // hide & seek with the form
@@ -16,15 +17,25 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
   })
 
-})
+  // submit.addEventListener('click', () => {
+  //   fetch("http://localhost:3000/toys", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify(data)
+  //   })
+  //  })
 
   function getToys() {
-    fetch("http://localhost:3000/toys")
-    .then(function(response) {
-      return response.json();
-    }).then(function(json) {
-       makeCard(json)
-  })
+      fetch("http://localhost:3000/toys")
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
+         makeCard(json)
+    })
+  }
 
   function makeCard(json) {
     console.log("Making cards")
@@ -56,7 +67,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
       button.classList.add("like-btn");
 
       toyCollection.appendChild(div);
+      }
     }
-  }
-
-}
+})
