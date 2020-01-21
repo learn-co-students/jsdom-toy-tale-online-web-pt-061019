@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   const addBtn = document.querySelector('#new-toy-btn')
   const toyForm = document.querySelector('.container')
-  const submit = document.querySelector('#submit')
+  const submit = document.querySelector('.submit')
 
   addBtn.addEventListener('click', () => {
     // hide & seek with the form
@@ -17,16 +17,16 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
   })
 
-  // submit.addEventListener('click', () => {
-  //   fetch("http://localhost:3000/toys", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json"
-  //     },
-  //     body: JSON.stringify(data)
-  //   })
-  //  })
+  submit.addEventListener('click', (name, image) => {
+    fetch("http://localhost:3000/toys", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({name,image})
+    })
+   })
 
   function getToys() {
       fetch("http://localhost:3000/toys")
