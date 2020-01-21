@@ -12,21 +12,37 @@ document.addEventListener("DOMContentLoaded", ()=>{
     addToy = !addToy
     if (addToy) {
       toyForm.style.display = 'block'
+      toyForm.addEventListener('submit', event => {
+        event.preventDefault();
+        submitData(event.target);
+      })
     } else {
       toyForm.style.display = 'none'
     }
   })
 
-  submit.addEventListener('click', (name, image) => {
+  function submitData(data) {
+
     fetch("http://localhost:3000/toys", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify({name,image})
+      body: JSON.stringify({
+        "name": data.name.value,
+        "image": data.image.value,
+        "likes": 0
+      })
     })
-   })
+    .then(function(response) {
+      response.json();
+    })
+    .then(function(json) {
+       makeCard(json)
+    })
+
+  }
 
   function getToys() {
       fetch("http://localhost:3000/toys")
@@ -38,8 +54,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 
   function makeCard(json) {
-    console.log("Making cards")
-    console.log(json)
+    // console.log("Making cards")
+    // console.log(json)
 
     const toyCollection = document.getElementById('toy-collection')
 
