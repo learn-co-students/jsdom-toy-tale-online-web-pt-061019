@@ -36,14 +36,22 @@ function renderToys(json){
   json.forEach(toy => {
     const toyCollection = document.getElementById("toy-collection")
     let cardDiv = document.createElement('div')
+    let button = document.createElement('button')
+    button.className = "like-btn"
+    button.innerHTML = "Like <3"
     cardDiv.className = "card"
     cardDiv.innerHTML =
     `<h2>${toy.name}</h2>
     <img src="${toy.image}" class="toy-avatar"/>
-    <p>${toy.likes} likes</p>
-    <button class="like-btn">Like <3</button>`
+    <p>${toy.likes}</p>`
     toyCollection.appendChild(cardDiv)
-  }) 
+    cardDiv.appendChild(button)
+
+    button.addEventListener('click', function(event){
+     let likeCount = cardDiv.querySelector('p');
+     likeCount.innerHTML = parseInt(likeCount.innerHTML) + 1;
+    })
+  })
 };
 
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -51,14 +59,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   const toyForm = document.querySelector('.container')
 
   getToys();
-
-  const card = document.querySelector('.card')
-  const likeBtn = document.querySelector('.like-btn')
-  likeBtn.addEventListener('click', function(event){
-    let likeCount = card.querySelector('p');
-    likeCount.innerHTML++;
-  })
-
+  newToy();
   addBtn.addEventListener('click', () => {
     // hide & seek with the form
     addToy = !addToy
@@ -68,7 +69,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
       toyForm.style.display = 'none'
     }
   })
-
-  newToy();
-
 })
