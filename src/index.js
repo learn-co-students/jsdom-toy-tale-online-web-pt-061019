@@ -39,6 +39,7 @@ function renderToys(json){
     let button = document.createElement('button')
     button.className = "like-btn"
     button.innerHTML = "Like <3"
+    button.id = toy.id
     cardDiv.className = "card"
     cardDiv.innerHTML =
     `<h2>${toy.name}</h2>
@@ -48,11 +49,28 @@ function renderToys(json){
     cardDiv.appendChild(button)
 
     button.addEventListener('click', function(event){
-     let likeCount = cardDiv.querySelector('p');
-     likeCount.innerHTML = parseInt(likeCount.innerHTML) + 1;
+     likes(event)
     })
   })
 };
+
+function likes(event){
+  likeCount = parseInt(event.target.previousElementSibling.innerText) + 1
+    fetch(Url + `/${event.target.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        "likes": likeCount
+      })
+    })
+    .then(resp => resp.json())
+    .then(json => event.target.previousElementSibling.innerText = `${likeCount}`)
+}
+     
+
 
 document.addEventListener("DOMContentLoaded", ()=>{
   const addBtn = document.querySelector('#new-toy-btn')
