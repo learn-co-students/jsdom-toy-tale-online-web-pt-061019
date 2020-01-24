@@ -1,11 +1,11 @@
 let addToy = false
 
-// On page load/////////////////////////////////////
+// On page load /////////////////////////////////////
 document.addEventListener("DOMContentLoaded", ()=>{
   const addBtn = document.querySelector('#new-toy-btn')
   const toyForm = document.querySelector('.container')
   addBtn.addEventListener('click', () => {
-    // hide & seek with the form
+    // Add toy
     addToy = !addToy
     if (addToy) {
       toyForm.style.display = 'block'
@@ -47,3 +47,44 @@ document.addEventListener("DOMContentLoaded", ()=>{
     form.reset()
   })
 }
+
+// Render toy cards ////////////////////////////////////////////
+function renderToys(json) {
+  const toyContainer = document.querySelector('#toy-collection')
+  json.forEach(toy => {
+    const div = document.createElement('div')
+    div.className = 'card'
+    div.innerHTML = `<h2>${toy.name}</h2>
+    <img src=${toy.image} class='#toy-avatar' />
+    <p><span class='counter' data-id='${toy.id}' > ${toy.likes} = 0</span>Likes</p>
+    <button class="like-btn" data-id="${toy.id}" > Like<3</button>`
+    toyContainer.append(div)
+
+  })
+}
+
+// Increment Likes //////////////////////////////////////////////
+let toyContainer = document.querySelector("#toy-collection")
+
+toyContainer.addEventListener("click", function(e){
+  if (e.target.className === "like-btn"){
+
+    let id = e.target.dataset.id
+    let targetSpan;
+
+    document.querySelectorAll("span.counter").forEach(function(span){
+      if (span.dataset.id === e.target.dataset.id)
+        targetSpan = span 
+    })
+    targetSpan.innerText++
+
+    fetch(`http://localhost:3000/toys/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        likes: parseInt(targetSpan.innerText)
+      })
+    })
+    .then(response => response.json())
+    }
+  })
+})
